@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head>
+    <th:block th:include="include :: header('')"/>
+    <th:block th:include="include :: layui-css"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="comminstrList">
+        <div class="layui-progress-bar " lay-percent="0%"></div>
+    </div>
+    <form id="form-chkpointfile-edit">
+        <input id="commListIds" name="commListIds" th:value="${commListIds}"  type="hidden"/>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: layui-js"/>
+
+<script th:inline="javascript">
+/*layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });*/
+    layui.use('element', function(){
+        var $ = layui.jquery ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+             loading: function(othis){
+                //模拟loading
+                var n = 0, timer = setInterval(function(){
+                    var data = {"commListIds": $("#commListIds").val()};
+                    $.ajax({
+                        url:  ctx + "common/getPercent",
+                        type: "post",
+                        dataType: "json",
+                        data: data,
+                        success: function(result) {
+                            var total = result.total;
+                            var num = result.num;
+                            n = (num/total) * 100;
+                        }
+                    });
+                    if(n>=100){
+                        n = 100;
+                        clearInterval(timer);
+                    }
+                    element.progress('comminstrList', n+'%');
+                    if(n >= 100){
+                        layer.msg('执行完成', {
+                            icon: 1,
+                            time: 3000 //3秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            //关闭iframe页面
+                            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                            parent.layer.close(index);
+                        });
+                    }
+                }, 500);
+            }
+        };
+        $(function(){
+            var othis = $(this), type = 'loading';
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+
+</script>
+</body>
+</html>

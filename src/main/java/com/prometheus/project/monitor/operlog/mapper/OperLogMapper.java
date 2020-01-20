@@ -1,0 +1,56 @@
+package com.prometheus.project.monitor.operlog.mapper;
+
+import java.util.List;
+import com.prometheus.project.monitor.operlog.domain.OperLog;
+
+/**
+ * 操作日志 数据层
+ * 
+ * @author chenzhi
+ */
+public interface OperLogMapper
+{
+    /**
+     * 新增操作日志
+     * 
+     * @param operLog 操作日志对象
+     */
+    public void insertOperLog(OperLog operLog);
+
+    /**
+     * 查询系统操作日志集合
+     * 
+     * @param operLog 操作日志对象
+     * @return 操作日志集合
+     */
+    public List<OperLog> selectOperLogList(OperLog operLog);
+    
+    /**
+     * 批量删除系统操作日志
+     * 
+     * @param ids 需要删除的数据
+     * @return 结果
+     */
+    public int deleteOperLogByIds(String[] ids);
+    
+    /**
+     * 查询操作日志详细
+     * 
+     * @param operId 操作ID
+     * @return 操作日志对象
+     */
+    public OperLog selectOperLogById(Long operId);
+
+    /**
+     * 根据机构删除操作日志
+     *
+     * @param clientId 需要删除的数据的机构
+     * @return 结果
+     */
+    public void deleteOperLogByClientId(Long clientId);
+
+    /**
+     * 清空操作日志
+     */
+    public void cleanOperLog();
+}

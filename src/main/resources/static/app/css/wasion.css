@@ -1,0 +1,58 @@
+body, html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+a {
+  color: #000000;
+}
+
+.prometheus-title {
+  text-align: center;
+  font-size: 34px;
+  color: #3cc51f;
+  font-weight: 400;
+  margin: 0 15%;
+}
+
+.prometheus-sub-title {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.prometheus-header {
+  padding: 35px 0;
+}
+
+.prometheus-content-padded {
+  padding: 15px;
+}
+
+.prometheus-second-title {
+  text-align: center;
+  font-size: 24px;
+  color: #3cc51f;
+  font-weight: 400;
+  margin: 0 15%;
+}
+/*必选 *号样式 */
+.prometheus-required-span-div .prometheus-required-span {
+  color: red !important;
+}
+
+
+footer {
+  text-align: center;
+  font-size: 14px;
+  padding: 20px;
+}
+
+footer a {
+  color: #999;
+  text-decoration: none;
+}

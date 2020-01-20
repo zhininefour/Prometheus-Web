@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head>
+    <th:block th:include="include :: header('选择经纬度')"/>
+    <title></title>
+</head>
+<style type="text/css">
+    #l-map {
+        /*margin-top: 10px;*/
+        /*height: 445px;*/
+        width: 100%;
+    }
+</style>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal " id="form-suntime-add">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group" id="r-result">
+                    <label class="col-sm-3 control-label">请输入:</label>
+                    <div class="col-sm-9">
+                        <input id="suggestId" class="form-control" type="text"><!--name="latitude"-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>经度-纬度：</label>
+                    <div class="col-sm-4">
+                        <input id="longitude" name="longitude" th:value="${longitude}" class="form-control" type="text"
+                               required>
+                    </div>
+                    <div class="col-sm-4">
+                        <input id="latitude" name="latitude" th:value="${latitude}" class="form-control" type="text"
+                               required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+    </form>
+    <div id="l-map"></div>
+</div>
+<th:block th:include="include :: footer"/>
+<script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=ZtXfzlL86zwTTO5UAUrq9ns0KLKdG2Ud"></script>
+<script th:src="@{/ajax/libs/baiduMap/map.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        //得在layer全屏后，再给地图map初始化大小
+        $("#l-map").css("height",$(window).height() - 85);
+
+        //初始化地图
+        initMap();
+    });
+
+    function submitHandler() {
+        parent.setLocation($("#latitude").val(), $("#longitude").val()); //这是父页面函数
+        let index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>
+

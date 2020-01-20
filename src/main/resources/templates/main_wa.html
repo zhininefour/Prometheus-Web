@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统计</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <form id="formId">
+        <div class="row">
+<!--            <div class="col-sm-3">-->
+<!--                <div class="ibox float-e-margins">-->
+<!--                    <div class="ibox-title">-->
+<!--                        <span class="label label-success pull-right">月</span>-->
+<!--                        <h5>资产总数</h5>-->
+<!--                    </div>-->
+<!--                    <div class="ibox-content">-->
+<!--                        <h1 class="no-margins">40 886,200</h1>-->
+<!--                        <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i>-->
+<!--                        </div>-->
+<!--                        <small>总收入</small>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">全月</span>
+                        <h5>月绑定量</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" id="monthBindData"></h1>
+<!--                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i>-->
+<!--                        </div>-->
+<!--                        <small>新订单</small>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">全年</span>
+                        <h5>年绑定量</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" id="yearBindData"></h1>
+<!--                        <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i>-->
+<!--                        </div>-->
+<!--                        <small>新访客</small>-->
+                    </div>
+                </div>
+            </div>
+<!--            <div class="col-sm-3">-->
+<!--                <div class="ibox float-e-margins">-->
+<!--                    <div class="ibox-title">-->
+<!--                        <span class="label label-danger pull-right">最近一个月</span>-->
+<!--                        <h5>活跃用户</h5>-->
+<!--                    </div>-->
+<!--                    <div class="ibox-content">-->
+<!--                        <h1 class="no-margins">80,600</h1>-->
+<!--                        <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i>-->
+<!--                        </div>-->
+<!--                        <small>12月</small>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+<!--                <div class="ibox float-e-margins">-->
+<!--                    <div class="ibox-title">-->
+<!--                        <h5>柱状图</h5>-->
+<!--                        <div class="ibox-tools">-->
+<!--                            <a class="collapse-link">-->
+<!--                                <i class="fa fa-chevron-up"></i>-->
+<!--                            </a>-->
+<!--                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">-->
+<!--                                <i class="fa fa-wrench"></i>-->
+<!--                            </a>-->
+<!--                            <ul class="dropdown-menu dropdown-user">-->
+<!--                                <li><a href="graph_flot.html#">选项1</a>-->
+<!--                                </li>-->
+<!--                                <li><a href="graph_flot.html#">选项2</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                            <a class="close-link">-->
+<!--                                <i class="fa fa-times"></i>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="ibox-content">-->
+
+<!--                        <div class="echarts" id="echarts-bar-chart"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="ibox float-e-margins" style="height: 300px">
+                    <div class="ibox-title">
+                        <h5>水表绑定量</h5>
+<!--                        <div class="pull-right">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button type="button" class="btn btn-xs btn-white active">天</button>-->
+<!--                                <button type="button" class="btn btn-xs btn-white">月</button>-->
+<!--                                <button type="button" class="btn btn-xs btn-white">年</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="ibox-content" style="height: 100%">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="flot-chart">
+<!--                                    <div id="container" style="height:100%; "></div>-->
+                                    <div class="echarts" id="echarts-bar-chart"></div>
+<!--                                    <div class="flot-chart-content" id="flot-dashboard-chart"></div>-->
+                                </div>
+                            </div>
+<!--                            <div class="col-sm-3">-->
+<!--                                <ul class="stat-list">-->
+<!--                                    <li>-->
+<!--                                        <h2 class="no-margins">2,346</h2>-->
+<!--                                        <small>订单总数</small>-->
+<!--                                        <div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="progress progress-mini">-->
+<!--                                            <div style="width: 48%;" class="progress-bar"></div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <h2 class="no-margins ">4,422</h2>-->
+<!--                                        <small>最近一个月订单</small>-->
+<!--                                        <div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="progress progress-mini">-->
+<!--                                            <div style="width: 60%;" class="progress-bar"></div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <h2 class="no-margins ">9,180</h2>-->
+<!--                                        <small>最近一个月销售额</small>-->
+<!--                                        <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="progress progress-mini">-->
+<!--                                            <div style="width: 22%;" class="progress-bar"></div>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                 </ul>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--<div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户项目列表</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>状态</th>
+                                    <th>日期</th>
+                                    <th>用户</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 11:20</td>
+                                    <td>青衣5858</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 24%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-warning">已取消</span>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 10:40</td>
+                                    <td>徐子崴</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 01:30</td>
+                                    <td>姜岚昕</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 54%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 02:20</td>
+                                    <td>武汉大兵哥</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 12%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 09:40</td>
+                                    <td>荆莹儿</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 22%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-primary">已完成</span>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 04:10</td>
+                                    <td>栾某某</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
+                                </tr>
+                                <tr>
+                                    <td><small>进行中...</small>
+                                    </td>
+                                    <td><i class="fa fa-clock-o"></i> 12:08</td>
+                                    <td>范范范二妮</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 23%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+         </div>-->
+        </form>
+      </div>
+
+<!--    </div>-->
+    <th:block th:include="include :: footer" />
+    <script th:src="@{/ajax/libs/flot/jquery.flot.js}"></script>
+
+    <script th:src="@{/ajax/libs/echarts/echarts.js}"></script>
+    <script th:src="@{/ajax/libs/echarts/echarts-gl.js}"></script>
+    <script th:src="@{/ajax/libs/echarts/shine.js}"></script>
+    <th:block th:include="include :: sparkline-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "asset/history";
+        $(function () {
+            ajaxGetBindWaterData();
+        });
+        // var textName = '';
+        // $(function () {
+        //     ajaxGetBindWaterData();
+        // });
+
+        // 初始化，查询后台数据
+        function ajaxGetBindWaterData() {
+            var data = $("#formId").serializeArray();
+            $.ajax({
+                url: prefix + "/selectBindCount",
+                type: "post",
+                dataType: "json",
+                async: true,
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在查询中，请稍后...");
+                    $.modal.disable();
+                },
+                success: function (result) {
+                    var dataBindCountList = result.dataBindCountList;
+                    var dataTimeList = result.dataTimeList;
+                    $("#monthBindData").append(result.dataMonthBindCount);
+                    $("#yearBindData").append(result.dataYearBindCount);
+                    setOption(dataBindCountList, dataTimeList);
+                    $.modal.closeLoading();
+                    $.modal.enable();
+                }
+            })
+        }
+
+        //图表初始化
+        function setOption(dataBindCountList, dataTimeList) {
+            var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+            var baroption = {
+                // title : {
+                //     text: '某地区蒸发量和降水量'
+                // },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['绑定量']
+                },
+                grid:{
+                    x:30,
+                    x2:40,
+                    y2:24
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : dataTimeList
+                        // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'绑定量',
+                        type:'bar',
+                        data:dataBindCountList,
+                        // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            barChart.setOption(baroption);
+        }
+
+
+        // function setOption(dataBindCountList, dataTimeList) {
+        //     // var termName =  $("#termID").find("option:selected").text();
+        //     // var termName = $("#termID").text();
+        //     var dom = document.getElementById("container");
+        //     var myChart = echarts.init(dom);
+        //     // var app = {};
+        //     option = null;
+        //     option = {
+        //         title: {
+        //             // text: textName,
+        //             // subtext: termName,
+        //             x: 'center',
+        //             align: 'right'
+        //         },
+        //         tooltip: {
+        //             trigger: 'axis',
+        //             axisPointer: {
+        //                 type: 'cross',
+        //                 animation: false,
+        //                 label: {
+        //                     backgroundColor: '#505765'
+        //                 }
+        //             },
+        //             formatter: function (params, ticket, callback) {
+        //                 var showHtm = "";
+        //                 for (var i = 0; i < params.length; i++) {
+        //                     showHtm += params[i].name + '</br>';
+        //                     var displayValue = params[i].value + "%"
+        //                     showHtm += params[i].marker + params[i].seriesName + '：' + displayValue;
+        //                 }
+        //                 return showHtm;
+        //             }
+        //         },
+        //         legend: {
+        //             data: ['日绑定量'],
+        //             x: 'left'
+        //         },
+        //         dataZoom: [
+        //             {
+        //                 show: true,
+        //                 realtime: true,
+        //                 start: 45,
+        //                 end: 85
+        //             },
+        //             {
+        //                 type: 'inside',
+        //                 realtime: true,
+        //                 start: 45,
+        //                 end: 85
+        //             }
+        //         ],
+        //         grid: {
+        //             left: '3%',
+        //             right: '4%',
+        //             bottom: '15%',
+        //             containLabel: true
+        //         },
+        //         toolbox: {
+        //             feature: {
+        //                 restore: {},
+        //                 saveAsImage: {}
+        //             }
+        //         },
+        //         xAxis: {
+        //             type: 'category',
+        //             boundaryGap: false,
+        //             data: dataTimeList
+        //         },
+        //         yAxis: [
+        //             {
+        //                 name: '绑定数量',
+        //                 type: 'value',
+        //                 axisLabel: {
+        //                     formatter: function (value) {
+        //                         return value;
+        //                     }
+        //                 }
+        //             }
+        //         ] ,
+        //         series: [
+        //             {
+        //                 name:'绑定数量',
+        //                 type:'line',
+        //                 lineStyle: {
+        //                     width: 1
+        //                 },
+        //                 data:dataBindCountList
+        //             }
+        //         ]
+        //     };
+        //     if (option && typeof option === "object") {
+        //         myChart.setOption(option, true);
+        //     }
+        // }
+
+	    // $(document).ready(function () {
+	    //     function gd(year, month, day) {
+	    //         return new Date(year, month - 1, day).getTime();
+	    //     }
+        //
+	    //     var previousPoint = null,
+	    //         previousLabel = null;
+        //
+	    //     $.plot($("#flot-dashboard-chart"), dataset, options);
+	    // });
+	    //
+	    //
+    </script>
+</body>
+</html>

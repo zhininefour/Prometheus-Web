@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prometheus.project.system.client.mapper.ClientMapper">
+    
+    <resultMap type="Client" id="ClientResult">
+        <result property="clientId"    column="client_id"    />
+        <result property="clientName"    column="client_name"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="leader"    column="leader"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="validStartTime"    column="valid_start_time"    />
+        <result property="validEndTime"    column="valid_end_time"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectClientVo">
+        select client_id, client_name, order_num, leader, phone, email, longitude, latitude, valid_start_time, valid_end_time, status, del_flag, create_by, create_time, update_by, update_time from sys_client
+    </sql>
+	
+    <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        <where>  
+            <if test="clientId != null and clientId != ''"> and client_id = #{clientId}</if>
+             <if test="clientName != null  and clientName != '' "> and client_name = #{clientName}</if>
+             <if test="orderNum != null "> and order_num = #{orderNum}</if>
+             <if test="leader != null  and leader != '' "> and leader = #{leader}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="longitude != null  and longitude != '' "> and longitude = #{longitude}</if>
+             <if test="latitude != null  and latitude != '' "> and latitude = #{latitude}</if>
+             <if test="validStartTime != null  and validStartTime != '' "> and valid_start_time = #{validStartTime}</if>
+             <if test="validEndTime != null  and validEndTime != '' "> and valid_end_time = #{validEndTime}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectClientById" parameterType="Long" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        where client_id = #{clientId}
+    </select>
+
+    <insert id="insertClient" parameterType="Client" useGeneratedKeys="true" keyProperty="client_id">
+        insert into sys_client
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="clientName != null  and clientName != ''  ">client_name,</if>
+			<if test="orderNum != null  ">order_num,</if>
+			<if test="leader != null  and leader != ''  ">leader,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="longitude != null  and longitude != ''  ">longitude,</if>
+			<if test="latitude != null  and latitude != ''  ">latitude,</if>
+			<if test="validStartTime != null  and validStartTime != ''  ">valid_start_time,</if>
+			<if test="validEndTime != null  and validEndTime != ''  ">valid_end_time,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="clientName != null  and clientName != ''  ">#{clientName},</if>
+			<if test="orderNum != null  ">#{orderNum},</if>
+			<if test="leader != null  and leader != ''  ">#{leader},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="longitude != null  and longitude != ''  ">#{longitude},</if>
+			<if test="latitude != null  and latitude != ''  ">#{latitude},</if>
+			<if test="validStartTime != null  and validStartTime != ''  ">#{validStartTime},</if>
+			<if test="validEndTime != null  and validEndTime != ''  ">#{validEndTime},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            sysdate()
+         </trim>
+    </insert>
+	 
+    <update id="updateClient" parameterType="Client">
+        update sys_client
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientName != null  and clientName != ''  ">client_name = #{clientName},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+            <if test="leader != null  and leader != ''  ">leader = #{leader},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="longitude != null  and longitude != ''  ">longitude = #{longitude},</if>
+            <if test="latitude != null  and latitude != ''  ">latitude = #{latitude},</if>
+            <if test="validStartTime != null  and validStartTime != ''  ">valid_start_time = #{validStartTime},</if>
+            <if test="validEndTime != null  and validEndTime != ''  ">valid_end_time = #{validEndTime},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
+        where client_id = #{clientId}
+    </update>
+
+	<delete id="deleteClientById" parameterType="Integer">
+        delete from sys_client where client_id = #{clientId}
+    </delete>
+	
+    <delete id="deleteClientByIds" parameterType="Long">
+        delete from sys_client where client_id in
+        <foreach item="clientId" collection="array" open="(" separator="," close=")">
+            #{clientId}
+        </foreach>
+    </delete>
+    
+</mapper>

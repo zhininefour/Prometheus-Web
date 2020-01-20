@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prometheus.project.common.dataValue.mapper.DataValueMapper">
+
+	<resultMap type="DataValue" id="DataValueResult">
+		<id     property="tableName"      column="tableName"      />
+		<result property="dataId"   column="dataId"   />
+		<result property="dataName"     column="dataName"     />
+		<result property="clientId"     column="client_id"     />
+	</resultMap>
+
+	<select id="selectDataList" parameterType="DataValue" resultMap="DataValueResult">
+		<if test="tableName != null and tableName != ''">
+
+			<if test='tableName == "sys_client"'>
+				select client_id dataId, client_name dataName
+			</if>
+			<if test='tableName == "sys_user"'>
+				select user_id dataId, login_name dataName
+			</if>
+			<if test='tableName == "t_basefile_district"'>
+				select district_id dataId, district_name dataName
+			</if>
+			<if test='tableName == "t_basefile_build"'>
+				select build_id dataId, build_name dataName
+			</if>
+
+			from ${tableName} t
+		</if>
+		<where>
+			<if test="clientId != null "> and t.client_id = #{clientId}  </if>
+		</where>
+	</select>
+
+</mapper> 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prometheus.project.monitor.logininfo.mapper.LoginInfoMapper">
+
+	<resultMap type="LoginInfo" id="LoginInfoResult">
+		<id     property="infoId"        column="info_id"           />
+		<result property="clientId"     column="client_id"        />
+		<result property="loginName"     column="login_name"        />
+		<result property="status"        column="status"            />
+		<result property="ipAddr"        column="ip_addr"            />
+		<result property="loginLocation" column="login_location"    />
+		<result property="browser"       column="browser"           />
+		<result property="os"            column="os"                />
+		<result property="msg"           column="msg"               />
+		<result property="loginTime"     column="login_time"        />
+	</resultMap>
+
+	<insert id="insertLoginInfo" parameterType="LoginInfo">
+		insert into sys_login_info (client_id, login_name, status, ip_addr, login_location, browser, os, msg, login_time)
+		values (#{clientId}, #{loginName}, #{status}, #{ipAddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
+	</insert>
+	
+	<select id="selectLoginInfoList" parameterType="LoginInfo" resultMap="LoginInfoResult">
+		select client_id, info_id,login_name,ip_addr,login_location,browser,os,status,msg,login_time from sys_login_info
+		<where>
+			<if test="clientId != null and clientId != ''">
+				AND client_id = #{clientId}
+			</if>
+			<if test="ipAddr != null and ipAddr != ''">
+				AND ip_addr like concat('%', #{ipAddr}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="loginName != null and loginName != ''">
+				AND login_name like concat('%', #{loginName}, '%')
+			</if>
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(login_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(login_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteLoginInfoByIds" parameterType="String">
+ 		delete from sys_login_info where info_id in
+ 		<foreach collection="array" item="infoId" open="(" separator="," close=")">
+ 			#{infoId}
+        </foreach> 
+ 	</delete>
+
+	<delete id="deleteLogininforByClientId" parameterType="Long">
+ 		delete from sys_login_info where client_id = #{clientId}
+ 	</delete>
+ 	
+ 	<update id="cleanLoginInfo">
+        truncate table sys_login_info
+    </update>
+
+</mapper> 
